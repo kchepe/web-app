@@ -1,15 +1,10 @@
-"use client";
+'use client';
 
-import {
-  DefaultValues,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ReactNode } from "react";
-import { Form } from "@/components/atoms";
+import { DefaultValues, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { ReactNode } from 'react';
+import { Form } from '@/components/atoms';
 
 interface DateFormProps {
   onSubmit?: SubmitHandler<FieldValues>;
@@ -27,7 +22,7 @@ const DataForm = ({
   resetFieldsAfterSubmit = false,
 }: DateFormProps) => {
   const form = useForm({
-    mode: "onTouched",
+    mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: initialValues,
   });
