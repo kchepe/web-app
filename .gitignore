@@ -1,0 +1,33 @@
+# # Server
+# server/node_modules/
+# server/dist/
+# server/.env
+
+# Client
+client/node_modules/
+client/.env*
+client/.vercel/
+
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/.pnpm-debug.log*
+
+client/.DS_Store
+client/*.pem
+
+client/build/
+client/.next/
+client/out/
+client/coverage/
+client/.pnp
+client/.pnp.*
+
+client/.yarn/*
+!client/.yarn/patches
+!client/.yarn/plugins
+!client/.yarn/releases
+!client/.yarn/versions
+
+client/*.tsbuildinfo
+client/next-env.d.ts
