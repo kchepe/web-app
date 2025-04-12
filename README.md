@@ -6,3 +6,11 @@ This is a monorepo project with separate `client` and `server` directories:
 - **Server**: TBD
 
 ---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+### 2. Install all dependecies
+
+npm install && (cd client && npm install) && (cd ../server && npm install)
