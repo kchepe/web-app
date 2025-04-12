@@ -31,3 +31,6 @@ client/.yarn/*
 
 client/*.tsbuildinfo
 client/next-env.d.ts
+
+# Root
+node_modules
