@@ -11,6 +11,13 @@ This is a monorepo project with separate `client` and `server` directories:
 
 ### 1. Clone the repository
 
+```bash
+git clone https://github.com/kchepe/web-app.git
+cd your-repo-name
+```
+
 ### 2. Install all dependecies
 
+```bash
 npm install && (cd client && npm install) && (cd ../server && npm install)
+```
