@@ -1,4 +1,3 @@
-export * from './search-input';
 export * from './card-item';
 export * from './user-badge';
 export * from './modal';

@@ -1,3 +1,3 @@
-export * from "@/components/atoms";
-export * from "@/components/molecules";
-export * from "@/components/organisims";
+export * from '@/components/atoms';
+export * from '@/components/molecules';
+export * from '@/components/organisims';

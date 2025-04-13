@@ -5,10 +5,12 @@ import React from 'react';
 import { loginInitialValues, loginSchema } from './login-form-values';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { User } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Login = () => {
   const handleLogin: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+    toast.info('Login successful!');
   };
 
   return (
