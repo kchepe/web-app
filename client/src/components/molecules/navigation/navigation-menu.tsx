@@ -95,4 +95,4 @@ const NavigationMenu = () => {
   );
 };
 
-export default NavigationMenu;
+export { NavigationMenu };

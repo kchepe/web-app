@@ -1,48 +1,30 @@
 import { ReactNode } from 'react';
 import {
-  Header,
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarProvider,
   SidebarRail,
 } from '../../atoms';
-import { NavigationUser } from './navigation-user';
-import NavigationMenu from './navigation-menu';
-import { NavigationContent } from './navigation-content';
-import { GalleryVerticalEnd } from 'lucide-react';
-import { NavigationLogo } from './navigation-logo';
 
 interface SidePanelProps {
   children: ReactNode;
+  header: ReactNode;
+  footer: ReactNode;
+  menuList: ReactNode;
 }
 
-const NavigationPanel = ({ children }: SidePanelProps) => (
+const NavigationPanel = ({ children, header, footer, menuList }: SidePanelProps) => (
   <SidebarProvider>
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <NavigationLogo />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavigationMenu />
-      </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <NavigationUser />
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
+      <SidebarHeader>{header}</SidebarHeader>
+      <SidebarContent>{menuList}</SidebarContent>
+      <SidebarFooter>{footer}</SidebarFooter>
       <SidebarRail />
     </Sidebar>
-    <SidebarInset>
-      <NavigationContent>{children}</NavigationContent>
-    </SidebarInset>
+    <SidebarInset>{children}</SidebarInset>
   </SidebarProvider>
 );
 

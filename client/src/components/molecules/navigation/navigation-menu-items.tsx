@@ -18,7 +18,7 @@ const NavigationMenuItems = ({ item }: NavigationMenuItemsProps) => {
   if (!item.items) {
     return (
       <SidebarMenuItem>
-        <SidebarMenuButton>
+        <SidebarMenuButton tooltip={item.title}>
           {item.icon && <item.icon />}
           <span>{item.title}</span>
         </SidebarMenuButton>
