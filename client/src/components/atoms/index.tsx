@@ -18,3 +18,4 @@ export * from './collapsible';
 export * from './breadcrumb';
 export * from './providers';
 export * from './alert';
+export * from './loading';

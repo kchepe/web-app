@@ -6,6 +6,8 @@ import {
   DataForm,
   Header,
   InputForm,
+  Loading,
+  LoadingButton,
   Paragraph,
   PasswordInputForm,
 } from '@/components';
@@ -19,9 +21,12 @@ import { useRouter } from 'next/navigation';
 const Login = () => {
   const { push } = useRouter();
   const [showBanner, setShowBanner] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin: SubmitHandler<FieldValues> = async (data) => {
+    setLoading(true);
     const response = await signIn('credentials', { redirect: false, ...data });
+    setLoading(false);
     if (!response?.ok) {
       setShowBanner(true);
       return;
@@ -60,9 +65,9 @@ const Login = () => {
             />
             <PasswordInputForm name="password" label="Password" placeholder="Enter Password" />
             <div>
-              <Button type="submit" className="w-full">
+              <LoadingButton loading={loading} type="submit" disabled={loading} className="w-full">
                 Login
-              </Button>
+              </LoadingButton>
             </div>
           </div>
         </DataForm>
