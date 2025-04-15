@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Fragment, ReactNode } from 'react';
+import React, { createElement, Fragment, ReactElement, ReactNode } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +13,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../atoms';
+import { LucideIcon } from 'lucide-react';
 
 interface IPopupMenuOption {
   label: string | ReactNode;
   onClick?: () => void;
-  subOptions?: IPopupMenuOption[];
+  icon?: LucideIcon;
+  subMenus?: IMenu[];
+  showSeparator?: boolean;
 }
 interface IMenu {
   header?: string | ReactNode;
@@ -25,26 +28,55 @@ interface IMenu {
 }
 
 interface PopupMenuProps {
-  trigger: ReactNode;
+  children: ReactNode;
   menu: IMenu[];
+  side?: 'left' | 'right' | 'top' | 'bottom';
 }
 
-const PopupMenu = ({ trigger, menu }: PopupMenuProps) => {
-  const renderMenuOption = (option: IPopupMenuOption, index: number) => {
-    if (option.subOptions && option.subOptions.length > 0) {
+const PopupMenu = ({ children, menu, side }: PopupMenuProps) => {
+  const renderMenuOption = (option: IPopupMenuOption, depthKey: string) => {
+    if (option.subMenus && option.subMenus.length > 0) {
       return (
-        <DropdownMenuSub key={index}>
-          <DropdownMenuSubTrigger>{option.label}</DropdownMenuSubTrigger>
+        <DropdownMenuSub key={`${depthKey}-${option.label}`}>
+          <DropdownMenuSubTrigger>
+            {option.icon && (
+              <span className="mr-1">
+                {createElement(option.icon as LucideIcon, { className: 'w-4 h-4' })}
+              </span>
+            )}
+            {option.label}
+          </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="min-w-56 rounded-lg">
-            {option.subOptions.map(renderMenuOption)}
+            {option.subMenus.map((subMenu, subIndex) => (
+              <Fragment key={`submenu-${depthKey}-${subIndex}`}>
+                {subMenu.header && (
+                  <>
+                    {subIndex !== 0 && <DropdownMenuSeparator />}
+                    <DropdownMenuLabel>{subMenu.header}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
+                <DropdownMenuGroup>
+                  {subMenu.options.map((subOption, i) =>
+                    renderMenuOption(subOption, `${depthKey}-${subIndex}-${i}`)
+                  )}
+                </DropdownMenuGroup>
+              </Fragment>
+            ))}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
       );
     }
 
     return (
-      <Fragment key={index}>
-        <DropdownMenuItem key={index} onClick={option.onClick}>
+      <Fragment key={`${depthKey}-${option.label}`}>
+        {option.showSeparator && <DropdownMenuSeparator />}
+        <DropdownMenuItem key={`${depthKey}-${option.label}`} onClick={option.onClick}>
+          {option.icon && (
+            <span className="mr-1">
+              {createElement(option.icon as LucideIcon, { className: 'w-4 h-4' })}
+            </span>
+          )}
           {option.label}
         </DropdownMenuItem>
       </Fragment>
@@ -53,10 +85,13 @@ const PopupMenu = ({ trigger, menu }: PopupMenuProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg">
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent
+        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+        side={side}
+      >
         {menu.map((item, index) => (
-          <Fragment key={index}>
+          <Fragment key={`group-${index}`}>
             {item.header && (
               <>
                 {index !== 0 && <DropdownMenuSeparator />}
@@ -64,7 +99,9 @@ const PopupMenu = ({ trigger, menu }: PopupMenuProps) => {
                 <DropdownMenuSeparator />
               </>
             )}
-            <DropdownMenuGroup>{item.options.map(renderMenuOption)}</DropdownMenuGroup>
+            <DropdownMenuGroup>
+              {item.options.map((option, i) => renderMenuOption(option, `${index}-${i}`))}
+            </DropdownMenuGroup>
           </Fragment>
         ))}
       </DropdownMenuContent>

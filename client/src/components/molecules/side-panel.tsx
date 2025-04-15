@@ -25,7 +25,9 @@ const SidePanel = ({ children }: SidePanelProps) => (
           Logo.
         </Header>
       </SidebarHeader>
-      <SidebarContent></SidebarContent>
+      <SidebarContent>
+        <SidebarMenu></SidebarMenu>
+      </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
