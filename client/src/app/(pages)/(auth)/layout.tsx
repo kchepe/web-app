@@ -1,20 +1,19 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { DashboardWrapper } from '@/components';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
-interface MainLayoutProps {
+interface AuthLayoutProps {
   children: ReactNode;
 }
 
-const MainLayout = async ({ children }: MainLayoutProps) => {
+const AuthLayout = async ({ children }: AuthLayoutProps) => {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect('/login');
+  if (session) {
+    redirect('/');
   }
-  return <DashboardWrapper>{children}</DashboardWrapper>;
+  return <div>{children}</div>;
 };
 
-export default MainLayout;
+export default AuthLayout;

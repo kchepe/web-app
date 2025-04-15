@@ -6,6 +6,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar, Text } fro
 import { UserBadge } from '../user-badge';
 import { ChevronsUpDown, LogOut, Moon, Sun, User } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { signOut } from 'next-auth/react';
 
 const NavigationUser = () => {
   const { isMobile } = useSidebar();
@@ -33,6 +34,9 @@ const NavigationUser = () => {
           label: 'Logout',
           icon: LogOut,
           showSeparator: true,
+          onClick: () => {
+            signOut();
+          },
         },
       ],
     },

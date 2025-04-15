@@ -9,3 +9,4 @@ export * from './popup-menu';
 export * from './slide-toggle';
 export * from './navigation';
 export * from './page-map';
+export * from './banner';

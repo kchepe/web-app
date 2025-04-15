@@ -1,16 +1,36 @@
 'use client';
 
-import { Button, DataForm, Header, InputForm, Paragraph, PasswordInputForm } from '@/components';
-import React from 'react';
+import {
+  Banner,
+  Button,
+  DataForm,
+  Header,
+  InputForm,
+  Paragraph,
+  PasswordInputForm,
+} from '@/components';
+import { useState } from 'react';
 import { loginInitialValues, loginSchema } from './login-form-values';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { User } from 'lucide-react';
-import { toast } from 'sonner';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
-  const handleLogin: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    toast.info('Login successful!');
+  const { push } = useRouter();
+  const [showBanner, setShowBanner] = useState(false);
+
+  const handleLogin: SubmitHandler<FieldValues> = async (data) => {
+    const response = await signIn('credentials', { redirect: false, ...data });
+    if (!response?.ok) {
+      setShowBanner(true);
+      return;
+    }
+    push('/');
+  };
+
+  const handleCloseBanner = () => {
+    setShowBanner(false);
   };
 
   return (
@@ -18,11 +38,18 @@ const Login = () => {
       <div className="space-y-8 w-80">
         <div className="flex items-center flex-col gap-1">
           <Header variant="h3">Login</Header>
-
           <Paragraph className="text-sm text-gray-500 dark:text-gray-300">
             Please enter your credentials.
           </Paragraph>
         </div>
+
+        <Banner
+          variant="error"
+          description="Invalid username or password"
+          showBanner={showBanner}
+          closeBanner={handleCloseBanner}
+        />
+
         <DataForm initialValues={loginInitialValues} schema={loginSchema} onSubmit={handleLogin}>
           <div className="space-y-4">
             <InputForm
