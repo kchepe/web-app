@@ -56,7 +56,7 @@ const PopupMenu = ({ trigger, menu }: PopupMenuProps) => {
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg">
         {menu.map((item, index) => (
-          <Fragment key={item.header}>
+          <Fragment key={index}>
             {item.header && (
               <>
                 {index !== 0 && <DropdownMenuSeparator />}
