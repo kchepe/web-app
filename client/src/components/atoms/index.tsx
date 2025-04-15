@@ -16,3 +16,4 @@ export * from './tooltip';
 export * from './dropdown-menu';
 export * from './collapsible';
 export * from './breadcrumb';
+export * from './providers';

@@ -4,38 +4,40 @@ import React from 'react';
 import { PopupMenu } from '../popup-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar, Text } from '../../atoms';
 import { UserBadge } from '../user-badge';
-import { Bell, ChevronsUpDown, LogOut, ReceiptText, User } from 'lucide-react';
-
-const menuItems = [
-  {
-    options: [
-      {
-        label: 'Account',
-        icon: User,
-      },
-      {
-        label: 'Billing',
-        icon: ReceiptText,
-      },
-      {
-        label: 'Notifications',
-        icon: Bell,
-      },
-    ],
-  },
-  {
-    options: [
-      {
-        label: 'Logout',
-        icon: LogOut,
-        showSeparator: true,
-      },
-    ],
-  },
-];
+import { ChevronsUpDown, LogOut, Moon, Sun, User } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 const NavigationUser = () => {
   const { isMobile } = useSidebar();
+  const { setTheme, theme } = useTheme();
+
+  const menuItems = [
+    {
+      options: [
+        {
+          label: 'Account',
+          icon: User,
+        },
+        {
+          label: theme === 'dark' ? 'Light Mode' : 'Dark Mode',
+          icon: theme === 'dark' ? Sun : Moon,
+          onClick: () => {
+            setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+          },
+        },
+      ],
+    },
+    {
+      options: [
+        {
+          label: 'Logout',
+          icon: LogOut,
+          showSeparator: true,
+        },
+      ],
+    },
+  ];
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

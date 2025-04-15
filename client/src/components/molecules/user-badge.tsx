@@ -27,9 +27,7 @@ const UserBadge = ({ className, imageUrl, name, size = 'custom' }: UserBadgeProp
   return (
     <Avatar className={cn(className, sizeClass[size])}>
       <AvatarImage src={imageUrl} alt="user-avatar" />
-      <AvatarFallback className={cn(className, 'bg-gray-300 font-bold')}>
-        {getInitials(name)}
-      </AvatarFallback>
+      <AvatarFallback className={cn(className, 'font-bold')}>{getInitials(name)}</AvatarFallback>
     </Avatar>
   );
 };

@@ -19,7 +19,9 @@ const Login = () => {
         <div className="flex items-center flex-col gap-1">
           <Header variant="h3">Login</Header>
 
-          <Paragraph className="text-sm text-gray-500">Please enter your credentials.</Paragraph>
+          <Paragraph className="text-sm text-gray-500 dark:text-gray-300">
+            Please enter your credentials.
+          </Paragraph>
         </div>
         <DataForm initialValues={loginInitialValues} schema={loginSchema} onSubmit={handleLogin}>
           <div className="space-y-4">
@@ -30,8 +32,10 @@ const Login = () => {
               startIcon={User}
             />
             <PasswordInputForm name="password" label="Password" placeholder="Enter Password" />
-            <div className="flex justify-end">
-              <Button type="submit">Login</Button>
+            <div>
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
             </div>
           </div>
         </DataForm>
