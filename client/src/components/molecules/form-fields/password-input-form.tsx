@@ -1,7 +1,7 @@
 'use client';
 
 import { FormElement } from './form-element';
-import { TextField, TextFieldProps } from '../textfield';
+import { TextField, TextFieldProps } from '../text-field';
 import { Eye, EyeClosed, Lock } from 'lucide-react';
 import { useState } from 'react';
 

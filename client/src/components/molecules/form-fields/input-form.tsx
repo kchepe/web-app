@@ -1,7 +1,7 @@
 'use client';
 
 import { FormElement } from './form-element';
-import { TextField, TextFieldProps } from '../textfield';
+import { TextField, TextFieldProps } from '../text-field';
 
 interface InputFormProps extends Omit<TextFieldProps, 'name' | 'label'> {
   label?: string;
