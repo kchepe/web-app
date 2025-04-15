@@ -13,7 +13,6 @@ const NavUser = () => {
           options: [
             {
               label: 'Profile',
-              subOptions: [{ header: 'User Profile', options: [] }],
             },
             { label: 'Settings', onClick: () => console.log('Settings clicked') },
             { label: 'Logout', onClick: () => console.log('Logout clicked') },
