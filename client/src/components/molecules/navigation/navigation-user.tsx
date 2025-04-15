@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { PopupMenu } from './popup-menu';
-import { Header, SidebarMenuButton, Text, useSidebar } from '../atoms';
-import { UserBadge } from './user-badge';
+import { PopupMenu } from '../popup-menu';
+import { Header, SidebarMenuButton, Text, useSidebar } from '../../atoms';
+import { UserBadge } from '../user-badge';
 import { Bell, ChevronsUpDown, LogOut, ReceiptText, User } from 'lucide-react';
 
 const menuItems = [
@@ -34,17 +34,18 @@ const menuItems = [
   },
 ];
 
-const NavUser = () => {
+const NavigationUser = () => {
   const { isMobile } = useSidebar();
   return (
     <PopupMenu side={isMobile ? 'bottom' : 'right'} menu={menuItems}>
-      <SidebarMenuButton className="h-14">
-        <UserBadge name="John Doe" />
-        <div className="flex flex-col text-xs">
-          <Header variant="h6" className="truncate">
-            John Doe
-          </Header>
-          <Text className="text-gray-500 truncate">bryanell1347@gmail.com</Text>
+      <SidebarMenuButton
+        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        size="lg"
+      >
+        <UserBadge name="John Doe" className="h-8 w-8 rounded-lg" />
+        <div className="grid flex-1 text-left text-sm leading-tight">
+          <span className="truncate font-semibold">John Doe</span>
+          <span className="truncate text-xs">johndoe@gmail.com</span>
         </div>
         <ChevronsUpDown className="ml-auto size-4" />
       </SidebarMenuButton>
@@ -52,4 +53,4 @@ const NavUser = () => {
   );
 };
 
-export { NavUser };
+export { NavigationUser };

@@ -5,5 +5,7 @@ export * from './form-fields';
 export * from './select-menu';
 export * from './loading';
 export * from './text-field';
-export * from './nav-user';
 export * from './popup-menu';
+export * from './slide-toggle';
+export * from './navigation';
+export * from './page-map';

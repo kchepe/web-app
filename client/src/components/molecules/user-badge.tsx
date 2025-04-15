@@ -5,10 +5,10 @@ interface UserBadgeProps {
   className?: string;
   imageUrl?: string;
   name: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'custom';
 }
 
-const UserBadge = ({ className, imageUrl, name, size = 'md' }: UserBadgeProps) => {
+const UserBadge = ({ className, imageUrl, name, size = 'custom' }: UserBadgeProps) => {
   const getInitials = (name: string) => {
     const words = name.split(' ');
     if (words.length === 1) {
@@ -21,12 +21,15 @@ const UserBadge = ({ className, imageUrl, name, size = 'md' }: UserBadgeProps) =
     sm: 'size-8',
     md: 'size-10',
     lg: 'size-14',
+    custom: '',
   };
 
   return (
     <Avatar className={cn(className, sizeClass[size])}>
       <AvatarImage src={imageUrl} alt="user-avatar" />
-      <AvatarFallback className="bg-gray-300 font-bold">{getInitials(name)}</AvatarFallback>
+      <AvatarFallback className={cn(className, 'bg-gray-300 font-bold')}>
+        {getInitials(name)}
+      </AvatarFallback>
     </Avatar>
   );
 };
