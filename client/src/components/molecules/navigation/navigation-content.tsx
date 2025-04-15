@@ -1,4 +1,4 @@
-import { PageMap, Separator, SidebarTrigger } from '@/components';
+import { PageMap, SidebarTrigger } from '@/components';
 import React, { ReactNode } from 'react';
 
 const NavigationContent = ({ children }: { children: ReactNode }) => {
@@ -11,7 +11,7 @@ const NavigationContent = ({ children }: { children: ReactNode }) => {
           <PageMap />
         </div>
       </header>
-      <div className="p-4 mt-8">{children}</div>
+      <div className="p-4">{children}</div>
     </>
   );
 };

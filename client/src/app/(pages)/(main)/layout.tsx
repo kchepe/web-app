@@ -6,9 +6,7 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => (
-  <DashboardWrapper>
-    <div className="-mt-10">{children}</div>
-  </DashboardWrapper>
+  <DashboardWrapper>{children}</DashboardWrapper>
 );
 
 export default MainLayout;
