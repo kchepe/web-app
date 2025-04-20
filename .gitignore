@@ -1,5 +1,6 @@
 # Server
 server/node_modules/
+server/generated/
 server/dist/
 server/.env*
 server/build/
