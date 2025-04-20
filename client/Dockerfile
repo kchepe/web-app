@@ -4,7 +4,7 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY package.json package-json.lock ./
+COPY package.json package-lock.json ./
 
 RUN CI=true 
 
