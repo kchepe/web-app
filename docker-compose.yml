@@ -11,8 +11,8 @@ services:
     volumes:
       - ./server:/app
       - /server/app/node_modules
-    # networks:
-    #   - 3state-app
+    networks:
+      - app_network
   client:
     container_name: client-app
     image: client
@@ -25,10 +25,21 @@ services:
     volumes:
       - ./client:/app
       - /client/app/node_modules
-    # networks:
-    #   - 3state-app
+    networks:
+      - app_network
     stdin_open: true
     tty: true
-# networks:
-#   3state-app:
-#     driver: bridge
+  db:
+    image: mysql:8.0
+    container_name: db-app
+    environment:
+      MYSQL_DATABASE: webdb
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_HOST: localhost
+    ports:
+      - '3308:3306'
+    networks:
+      - app_network
+networks:
+  app_network:
+    driver: bridge
