@@ -17,13 +17,13 @@ model Employee {
   id         String       @id
   firstname  String
   lastname   String
-  email      String
-  Credential Credential[]
+  email      String       @unique
+  Credential Credential?
 }
 
 model Credential {
   id         String   @id
   password   String
-  employeeId String
-  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId String   @unique
+  employee   Employee? @relation(fields: [employeeId], references: [id])
 }

@@ -1,14 +1,8 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
-import { GetAllEmployeeUseCase } from './application/employee';
-import { InMemoryEmplyeeRepository } from './infrastructure/repositories/employee.repo.impl';
-import { EmployeeBaseRepo } from './domain/employee/repositories/base/employee-base.repo';
+import { EmployeeModule } from './modules/auth/AuthModule';
 
 @Module({
-  imports: [PrismaModule],
-  providers: [
-    GetAllEmployeeUseCase,
-    { useClass: InMemoryEmplyeeRepository, provide: EmployeeBaseRepo },
-  ],
+  imports: [PrismaModule, EmployeeModule],
 })
 export class AppModule {}
