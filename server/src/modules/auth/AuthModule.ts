@@ -1,18 +1,20 @@
 import { Module } from '@nestjs/common';
 import { EmployeeController } from './interface/controllers/EmployeeController';
-import { EmployeeRepositoryImpl } from './infrastructure/EmployeeRepositoryImpl';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateEmployeeUseCase } from './application/use-cases';
+import { EmployeePrismaRepository } from './infrastructure';
+import { GenerateEmployeeId } from './domain/services';
 
 @Module({
   controllers: [EmployeeController],
   providers: [
-    EmployeeRepositoryImpl,
+    EmployeePrismaRepository,
     PrismaService,
     CreateEmployeeUseCase,
+    GenerateEmployeeId,
     {
       provide: 'IEmployeeRepository',
-      useClass: EmployeeRepositoryImpl,
+      useClass: EmployeePrismaRepository,
     },
   ],
 })

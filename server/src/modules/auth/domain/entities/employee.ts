@@ -1,10 +1,11 @@
 import { BaseEntity, UniqueEntityID } from '../../../../shared/domain';
+import { EmailVo } from '../value-objects/email.vo';
 import { CredentialEntity } from './credential';
 
 interface EmployeeEntityProps {
   firstname: string;
   lastname: string;
-  email: string;
+  email: EmailVo;
   credential?: CredentialEntity;
 }
 
@@ -25,7 +26,7 @@ export class EmployeeEntity extends BaseEntity<EmployeeEntityProps> {
     return this.props.lastname;
   }
 
-  get email(): string {
+  get email(): EmailVo {
     return this.props.email;
   }
 
@@ -37,11 +38,11 @@ export class EmployeeEntity extends BaseEntity<EmployeeEntityProps> {
     this.props.lastname = newLastname;
   }
 
-  updatefirstname(newEmail: string) {
-    this.props.email = newEmail;
+  updateFirstname(newFirstname: string) {
+    this.props.firstname = newFirstname;
   }
 
-  updateEmail(newFirstname: string) {
-    this.props.firstname = newFirstname;
+  updateEmail(newEmail: EmailVo) {
+    this.props.email = newEmail;
   }
 }

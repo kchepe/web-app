@@ -1,3 +1,3 @@
-import { EmployeeMapper } from './EmployeeMapper';
+import { EmployeeMapper } from './employee.mapper';
 
 export { EmployeeMapper };

@@ -3,7 +3,7 @@ import { ICredentialRepository } from '../domain/repositories/ICredentialReposit
 import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
-export class CredentialRepositoryImpl implements ICredentialRepository {
+export class CredentialPrismaRepository implements ICredentialRepository {
   constructor(private prisma: PrismaService) {}
   updatePassword: (employeeId: string, newPassword: string) => Promise<void>;
 }

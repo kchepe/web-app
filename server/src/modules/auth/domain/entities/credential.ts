@@ -1,7 +1,8 @@
 import { BaseEntity, UniqueEntityID } from '../../../../shared/domain';
+import { PasswordVo } from '../value-objects';
 
 interface CredentialEntityProps {
-  password: string;
+  password: PasswordVo;
 }
 
 export class CredentialEntity extends BaseEntity<CredentialEntityProps> {
@@ -13,11 +14,11 @@ export class CredentialEntity extends BaseEntity<CredentialEntityProps> {
     return new CredentialEntity(props, id);
   }
 
-  get password(): string {
+  get password(): PasswordVo {
     return this.props.password;
   }
 
-  updatePassword(newPassword: string) {
+  updatePassword(newPassword: PasswordVo) {
     this.props.password = newPassword;
   }
 }

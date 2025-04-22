@@ -1,4 +1,4 @@
-import { CredentialRepositoryImpl } from './CredentialRepositoryImpl';
-import { EmployeeRepositoryImpl } from './EmployeeRepositoryImpl';
+import { CredentialPrismaRepository } from './credential.prisma.repo';
+import { EmployeePrismaRepository } from './employee.prisma.repo';
 
-export { EmployeeRepositoryImpl, CredentialRepositoryImpl };
+export { EmployeePrismaRepository, CredentialPrismaRepository };

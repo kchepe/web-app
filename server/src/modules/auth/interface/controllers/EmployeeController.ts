@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
-import { EmployeeRepositoryImpl } from '../../infrastructure/EmployeeRepositoryImpl';
+import { EmployeePrismaRepository } from '../../infrastructure/employee.prisma.repo';
 import { CreateEmployeeUseCase } from '../../application/use-cases';
 import { CreateEmployeeDto } from '../dto';
 
@@ -7,7 +7,7 @@ import { CreateEmployeeDto } from '../dto';
 export class EmployeeController {
   constructor(
     @Inject('IEmployeeRepository')
-    private readonly repo: EmployeeRepositoryImpl,
+    private readonly repo: EmployeePrismaRepository,
     private readonly createEmployeeUseCase: CreateEmployeeUseCase
   ) {}
 
@@ -25,11 +25,7 @@ export class EmployeeController {
 
   @Post('create')
   async addEmployee(@Body() body: CreateEmployeeDto) {
-    try {
-      const id = await this.createEmployeeUseCase.execute(body);
-      return { message: 'Employee created successfully', id };
-    } catch (err) {
-      console.log(err);
-    }
+    const id = await this.createEmployeeUseCase.execute(body);
+    return { message: 'Employee created successfully', id };
   }
 }

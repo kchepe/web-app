@@ -1,18 +1,21 @@
 import { Employee as PrismaEmployee, Credential as PrismaCredential } from '@prisma/client';
 import { EmployeeEntity, CredentialEntity } from '../../domain/entities';
+import { EmailVo, PasswordVo } from '../../domain/value-objects';
 
 export class EmployeeMapper {
-  static toDomain(prisma: PrismaEmployee & { credential?: PrismaCredential }): EmployeeEntity {
+  static async toDomain(
+    prisma: PrismaEmployee & { credential?: PrismaCredential }
+  ): Promise<EmployeeEntity> {
     const credential = prisma.credential
       ? CredentialEntity.create({
-          password: prisma.credential.password,
+          password: await PasswordVo.create(prisma.credential.password),
         })
       : undefined;
 
     return EmployeeEntity.create({
       firstname: prisma.firstname,
       lastname: prisma.lastname,
-      email: prisma.email,
+      email: EmailVo.create(prisma.email),
       credential,
     });
   }
@@ -23,8 +26,8 @@ export class EmployeeMapper {
       id: employee.id.toString(),
       firstname: employee.firstname,
       lastname: employee.lastname,
-      email: employee.email,
-      credential,
+      email: employee.email.email,
+      credential: { password: credential.password.value, id: credential.id.toString() },
     };
   }
 }
