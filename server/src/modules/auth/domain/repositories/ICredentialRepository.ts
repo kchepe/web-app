@@ -1,3 +1,6 @@
+import { CredentialEntity } from '../entities';
+
 export interface ICredentialRepository {
-  updatePassword: (employeeId: string, newPassword: string) => Promise<void>;
+  updatePassword(credential: CredentialEntity): Promise<CredentialEntity | null>;
+  getCredentialByEmployeeId(employeeId: string): Promise<CredentialEntity | null>;
 }

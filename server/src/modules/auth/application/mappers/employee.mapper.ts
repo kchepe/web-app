@@ -3,15 +3,14 @@ import { EmployeeEntity, CredentialEntity } from '../../domain/entities';
 import { EmailVo, PasswordVo } from '../../domain/value-objects';
 import { EmployeeDto } from '../../interface';
 import { UniqueEntityID } from '../../../../shared/domain';
+import { CredentialMapper } from './credential.mapper';
 
 export class EmployeeMapper {
   static async toEntityFromPersistance(
     prisma: PrismaEmployee & { credential?: PrismaCredential }
   ): Promise<EmployeeEntity> {
     const credential = prisma.credential
-      ? CredentialEntity.create({
-          password: await PasswordVo.create(prisma.credential.password),
-        })
+      ? await CredentialMapper.toEntityFromPersistance(prisma.credential)
       : undefined;
 
     return EmployeeEntity.create(
@@ -40,15 +39,10 @@ export class EmployeeMapper {
   }
 
   static toUpdatePersistanceFromEntity(employee: EmployeeEntity) {
-    const credential = employee.getCredential();
-
     return {
       firstname: employee.firstname,
       lastname: employee.lastname,
       email: employee.email.value,
-      Credential: {
-        update: { password: credential.password.value },
-      },
     };
   }
 

@@ -3,6 +3,7 @@ import { PasswordVo } from '../value-objects';
 
 interface CredentialEntityProps {
   password: PasswordVo;
+  employeeId?: string;
 }
 
 export class CredentialEntity extends BaseEntity<CredentialEntityProps> {
@@ -16,6 +17,10 @@ export class CredentialEntity extends BaseEntity<CredentialEntityProps> {
 
   get password(): PasswordVo {
     return this.props.password;
+  }
+
+  get employeeId(): string {
+    return this.props.employeeId;
   }
 
   updatePassword(newPassword: PasswordVo) {

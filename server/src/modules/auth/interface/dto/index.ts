@@ -1,3 +1,2 @@
-import { CreateEmployeeDto, EmployeeDto } from './employee.dto';
-
-export { CreateEmployeeDto, EmployeeDto };
+export * from './credential.dto';
+export * from './employee.dto';

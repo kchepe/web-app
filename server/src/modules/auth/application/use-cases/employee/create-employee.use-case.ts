@@ -1,10 +1,10 @@
-import { CredentialEntity, EmployeeEntity } from '../../domain/entities';
-import { CreateEmployeeDto, EmployeeDto } from '../../interface';
+import { CredentialEntity, EmployeeEntity } from '../../../domain/entities';
+import { CreateEmployeeDto, EmployeeDto } from '../../../interface';
 import { Inject, Injectable } from '@nestjs/common';
-import { IEmployeeRepository } from '../../domain/repositories';
-import { EmailVo, PasswordVo } from '../../domain/value-objects';
-import { GenerateEmployeeId } from '../../domain/services';
-import { EmployeeMapper } from '../mappers';
+import { IEmployeeRepository } from '../../../domain/repositories';
+import { EmailVo, PasswordVo } from '../../../domain/value-objects';
+import { GenerateEmployeeId } from '../../../domain/services';
+import { EmployeeMapper } from '../../mappers';
 
 @Injectable()
 export class CreateEmployeeUseCase {
