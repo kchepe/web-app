@@ -14,6 +14,7 @@ export class EmployeeEntity extends BaseEntity<EmployeeEntityProps> {
     super(props, id);
   }
 
+  // TODO: transfer the create to a factory
   static create(props: EmployeeEntityProps, id?: UniqueEntityID): EmployeeEntity {
     return new EmployeeEntity(props, id);
   }

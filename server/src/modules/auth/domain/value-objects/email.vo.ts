@@ -11,7 +11,7 @@ export class EmailVo {
     return new EmailVo(rawEmail.toLowerCase());
   }
 
-  get email(): string {
+  get value(): string {
     return this._email;
   }
 }

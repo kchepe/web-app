@@ -1,3 +1,3 @@
-import { CreateEmployeeDto } from './create-employee.dto';
+import { CreateEmployeeDto, EmployeeDto } from './employee.dto';
 
-export { CreateEmployeeDto };
+export { CreateEmployeeDto, EmployeeDto };

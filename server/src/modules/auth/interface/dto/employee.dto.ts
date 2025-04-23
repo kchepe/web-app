@@ -1,16 +1,21 @@
 import { IsEmail, IsString, MinLength } from 'class-validator';
 
-export class CreateEmployeeDto {
+export class EmployeeDto {
+  @IsString()
+  id?: string;
+
   @IsString()
   firstname: string;
 
   @IsString()
   lastname: string;
 
+  @IsEmail()
+  email: string;
+}
+
+export class CreateEmployeeDto extends EmployeeDto {
   @IsString()
   @MinLength(8)
   password: string;
-
-  @IsEmail()
-  email: string;
 }

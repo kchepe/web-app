@@ -1,10 +1,10 @@
 import { CredentialEntity, EmployeeEntity } from '../../domain/entities';
-import { Employee } from '@prisma/client';
-import { CreateEmployeeDto } from '../../interface';
+import { CreateEmployeeDto, EmployeeDto } from '../../interface';
 import { Inject, Injectable } from '@nestjs/common';
 import { IEmployeeRepository } from '../../domain/repositories';
 import { EmailVo, PasswordVo } from '../../domain/value-objects';
 import { GenerateEmployeeId } from '../../domain/services';
+import { EmployeeMapper } from '../mappers';
 
 @Injectable()
 export class CreateEmployeeUseCase {
@@ -13,9 +13,9 @@ export class CreateEmployeeUseCase {
     private readonly generateEmployeeIdService: GenerateEmployeeId
   ) {}
 
-  async execute(input: CreateEmployeeDto): Promise<Employee> {
+  async execute(input: CreateEmployeeDto): Promise<EmployeeDto> {
     const existingEmployee = await this.employeeRepository.findByEmail(input.email);
-    if (existingEmployee) {
+    if (!!existingEmployee) {
       throw new Error('Email already in use');
     }
 
@@ -24,19 +24,19 @@ export class CreateEmployeeUseCase {
       input.firstname,
       input.lastname
     );
-    const credential = CredentialEntity.create({ password });
+
     const newEmployee = EmployeeEntity.create(
       {
         firstname: input.firstname,
         lastname: input.lastname,
         email: EmailVo.create(input.email),
-        credential,
+        credential: CredentialEntity.create({ password }),
       },
       employeeId
     );
 
     const employee = await this.employeeRepository.create(newEmployee);
 
-    return employee;
+    return EmployeeMapper.toDtoFromEntity(employee);
   }
 }
