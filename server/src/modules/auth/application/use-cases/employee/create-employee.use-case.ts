@@ -13,7 +13,7 @@ export class CreateEmployeeUseCase {
     private readonly generateEmployeeIdService: GenerateEmployeeId
   ) {}
 
-  async execute(input: CreateEmployeeDto): Promise<EmployeeDto> {
+  public async execute(input: CreateEmployeeDto): Promise<EmployeeDto> {
     const existingEmployee = await this.employeeRepository.findByEmail(input.email);
     if (!!existingEmployee) {
       throw new Error('Email already in use');

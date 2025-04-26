@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { EmployeeController } from './interface/controllers/EmployeeController';
+import { EmployeeController } from './interface/controllers/employee.controller';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateEmployeeUseCase, UpdateCredentialUseCase } from './application/use-cases';
+import {
+  CreateEmployeeUseCase,
+  FindEmployeeByIdUseCase,
+  UpdateCredentialUseCase,
+} from './application/use-cases';
 import { CredentialPrismaRepository, EmployeePrismaRepository } from './infrastructure';
 import { GenerateEmployeeId } from './domain/services';
 
@@ -11,6 +15,7 @@ import { GenerateEmployeeId } from './domain/services';
     EmployeePrismaRepository,
     PrismaService,
     CreateEmployeeUseCase,
+    FindEmployeeByIdUseCase,
     GenerateEmployeeId,
     {
       provide: 'ICredentialRepository',

@@ -1,4 +1,4 @@
-import { BaseEntity } from './BaseEntity';
-import { UniqueEntityID } from './UniqueEntityId';
+import { BaseEntity } from './base-entity';
+import { UniqueEntityID } from './unique-entity-id';
 
 export { BaseEntity, UniqueEntityID };

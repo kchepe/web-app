@@ -1,3 +1,3 @@
-import { EmployeeController } from './EmployeeController';
+import { EmployeeController } from './employee.controller';
 
 export { EmployeeController };
