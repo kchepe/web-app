@@ -25,7 +25,7 @@ export class EmployeePrismaRepository implements IEmployeeRepository {
     return tryCatch({
       process: async () => {
         const employee = await this.prisma.employee.findUnique({ where: { id } });
-        if (!employee) return Err('Employee not found');
+        if (!employee) return Err(`Employee not found with id: ${id}`);
         return EmployeeMapper.toEntityFromPersistance(employee);
       },
       onError: () => 'Unexpected error occurred while fetching employee',
@@ -48,7 +48,7 @@ export class EmployeePrismaRepository implements IEmployeeRepository {
     return tryCatch({
       process: async () => {
         const existingEmployee = await this.prisma.employee.findUnique({ where: { email } });
-        if (!existingEmployee) return Err('Employee not found');
+        if (!existingEmployee) return Err(`Employee not found with email: ${email}`);
         return EmployeeMapper.toEntityFromPersistance(existingEmployee);
       },
       onError: () => 'Unexpected error occurred while fetching employee',
