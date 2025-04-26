@@ -22,7 +22,7 @@ export class GenerateEmployeeId {
     }
 
     const nextId = String(parseInt(lastId, 10) + 1).padStart(5, '0');
-    const customId = `${initials}-${year}${nextId}`;
+    const customId = `${initials}-${year}-${nextId}`;
 
     return new UniqueEntityID(customId);
   }

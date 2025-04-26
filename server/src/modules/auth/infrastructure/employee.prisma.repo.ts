@@ -17,7 +17,7 @@ export class EmployeePrismaRepository implements IEmployeeRepository {
         const user = await this.prisma.employee.create({ data });
         return EmployeeMapper.toEntityFromPersistance(user);
       },
-      onError: () => 'Unexpected error occured while creating employee',
+      onError: (e) => `Unexpected error occured while creating employee ${e}`,
     });
   }
 
