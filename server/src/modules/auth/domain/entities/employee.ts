@@ -15,7 +15,6 @@ export class EmployeeEntity extends BaseEntity<EmployeeEntityProps> {
   }
 
   // TODO: transfer the create to a factory
-  // TODO: add CQRS implementation
   static create(props: EmployeeEntityProps, id?: UniqueEntityID): EmployeeEntity {
     return new EmployeeEntity(props, id);
   }

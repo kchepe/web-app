@@ -18,7 +18,9 @@ export class EmployeeController {
 
   @Get(':id')
   async findById(@Param('id') id: string): Promise<ApiResponse<EmployeeDto>> {
-    const result = await this.findEmployeeByIdUseCase.execute(id);
+    const query = EmployeeMapper.toQueryFromDto(id);
+
+    const result = await this.findEmployeeByIdUseCase.execute(query);
 
     if (!result.ok) {
       return errorResponse(result.val.toString());

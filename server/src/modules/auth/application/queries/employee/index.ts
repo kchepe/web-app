@@ -1,1 +1,1 @@
-export * from './get-user-by-id.query';
+export * from './get-employee-by-id.query';

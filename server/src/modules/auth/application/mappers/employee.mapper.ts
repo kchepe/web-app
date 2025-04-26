@@ -5,6 +5,7 @@ import { CreateEmployeeDto, EmployeeDto } from '../../interface';
 import { UniqueEntityID } from '../../../../shared/domain';
 import { CredentialMapper } from './credential.mapper';
 import { CreateEmployeeCommand } from '../command/employee';
+import { GetEmployeeByIdQuery } from '../queries/employee';
 
 export class EmployeeMapper {
   static async toEntityFromPersistance(
@@ -58,5 +59,9 @@ export class EmployeeMapper {
 
   static toCommandFromDto(dto: CreateEmployeeDto): CreateEmployeeCommand {
     return new CreateEmployeeCommand(dto.firstname, dto.lastname, dto.email, dto.password);
+  }
+
+  static toQueryFromDto(query: string): GetEmployeeByIdQuery {
+    return new GetEmployeeByIdQuery(query);
   }
 }
