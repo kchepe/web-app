@@ -7,10 +7,10 @@ import {
 import { CreateEmployeeDto, EmployeeDto, UpdateCredentialDto } from '../dto';
 import { EmployeeMapper } from '../../application/mappers';
 import { ApiResponse, errorResponse, successResponse } from '../../../../shared/utils/api-response';
+import { CreateEmployeeCommand } from '../../application/command/employee';
 @Controller('employee')
 export class EmployeeController {
   constructor(
-    @Inject('IEmployeeRepository')
     private readonly createEmployeeUseCase: CreateEmployeeUseCase,
     private readonly updateCredentialUseCase: UpdateCredentialUseCase,
     private readonly findEmployeeByIdUseCase: FindEmployeeByIdUseCase
@@ -31,9 +31,16 @@ export class EmployeeController {
   }
 
   @Post('create')
-  async addEmployee(@Body() body: CreateEmployeeDto) {
-    const id = await this.createEmployeeUseCase.execute(body);
-    return { message: 'Employee created successfully', id };
+  async addEmployee(@Body() body: CreateEmployeeDto): Promise<ApiResponse<string>> {
+    const command = EmployeeMapper.toCommandFromDto(body);
+
+    const result = await this.createEmployeeUseCase.execute(command);
+
+    if (!result.ok) {
+      return errorResponse(result.val.toString());
+    }
+
+    return successResponse('Employee created successfully', result.val.id.toString());
   }
 
   @Patch('update/password')

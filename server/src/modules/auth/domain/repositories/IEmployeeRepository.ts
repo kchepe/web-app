@@ -1,9 +1,11 @@
 import { EmployeeEntity } from '../entities/';
 import { Result } from 'src/shared/result';
 
+export type EmployeeQueryResponse = Result<EmployeeEntity, string>;
+
 export interface IEmployeeRepository {
-  create(employee: EmployeeEntity): Promise<EmployeeEntity>;
-  findById(id: string): Promise<Result<EmployeeEntity, string>>;
-  getLastCreadtedEmployee: () => Promise<EmployeeEntity | null>;
-  findByEmail: (email: string) => Promise<EmployeeEntity | null>;
+  create(employee: EmployeeEntity): Promise<EmployeeQueryResponse>;
+  findById(id: string): Promise<EmployeeQueryResponse>;
+  getLastCreatedEmployee: () => Promise<EmployeeQueryResponse>;
+  findByEmail: (email: string) => Promise<EmployeeQueryResponse>;
 }

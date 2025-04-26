@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IEmployeeRepository } from 'src/modules/auth/domain/repositories';
-import { Result, Err, Ok } from 'ts-results';
+import { Result, Err, Ok } from '../../../../../shared/result';
 import { EmployeeEntity } from 'src/modules/auth/domain/entities';
 
 @Injectable()

@@ -19,11 +19,13 @@ model Employee {
   lastname   String
   email      String       @unique
   Credential Credential?
+  createdAt  DateTime      @default(now())
 }
 
 model Credential {
-  id         String   @id
+  id         String    @id
   password   String
-  employeeId String   @unique
+  employeeId String    @unique
   employee   Employee? @relation(fields: [employeeId], references: [id])
+  createdAt  DateTime   @default(now())
 }

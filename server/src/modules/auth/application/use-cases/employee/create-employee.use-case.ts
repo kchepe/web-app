@@ -1,10 +1,10 @@
 import { CredentialEntity, EmployeeEntity } from '../../../domain/entities';
-import { CreateEmployeeDto, EmployeeDto } from '../../../interface';
 import { Inject, Injectable } from '@nestjs/common';
 import { IEmployeeRepository } from '../../../domain/repositories';
 import { EmailVo, PasswordVo } from '../../../domain/value-objects';
 import { GenerateEmployeeId } from '../../../domain/services';
-import { EmployeeMapper } from '../../mappers';
+import { Err, Ok, Result } from '../../../../../shared/result';
+import { CreateEmployeeCommand } from '../../command/employee';
 
 @Injectable()
 export class CreateEmployeeUseCase {
@@ -13,10 +13,11 @@ export class CreateEmployeeUseCase {
     private readonly generateEmployeeIdService: GenerateEmployeeId
   ) {}
 
-  public async execute(input: CreateEmployeeDto): Promise<EmployeeDto> {
+  public async execute(input: CreateEmployeeCommand): Promise<Result<EmployeeEntity, string>> {
     const existingEmployee = await this.employeeRepository.findByEmail(input.email);
-    if (!!existingEmployee) {
-      throw new Error('Email already in use');
+
+    if (!existingEmployee.err) {
+      return Err('Email already in use');
     }
 
     const password = await PasswordVo.create(input.password);
@@ -37,6 +38,10 @@ export class CreateEmployeeUseCase {
 
     const employee = await this.employeeRepository.create(newEmployee);
 
-    return EmployeeMapper.toDtoFromEntity(employee);
+    if (employee.err) {
+      return Err(employee.val);
+    }
+
+    return Ok(employee.unwrap());
   }
 }

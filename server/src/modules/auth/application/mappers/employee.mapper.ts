@@ -1,9 +1,10 @@
 import { Employee as PrismaEmployee, Credential as PrismaCredential } from '@prisma/client';
-import { EmployeeEntity, CredentialEntity } from '../../domain/entities';
-import { EmailVo, PasswordVo } from '../../domain/value-objects';
-import { EmployeeDto } from '../../interface';
+import { EmployeeEntity } from '../../domain/entities';
+import { EmailVo } from '../../domain/value-objects';
+import { CreateEmployeeDto, EmployeeDto } from '../../interface';
 import { UniqueEntityID } from '../../../../shared/domain';
 import { CredentialMapper } from './credential.mapper';
+import { CreateEmployeeCommand } from '../command/employee';
 
 export class EmployeeMapper {
   static async toEntityFromPersistance(
@@ -53,5 +54,9 @@ export class EmployeeMapper {
       lastname: employee.lastname,
       email: employee.email.value,
     };
+  }
+
+  static toCommandFromDto(dto: CreateEmployeeDto): CreateEmployeeCommand {
+    return new CreateEmployeeCommand(dto.firstname, dto.lastname, dto.email, dto.password);
   }
 }
