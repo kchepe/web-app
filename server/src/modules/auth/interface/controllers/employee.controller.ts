@@ -7,7 +7,7 @@ import {
 import { CreateEmployeeDto, EmployeeDto, UpdateCredentialDto } from '../dto';
 import { EmployeeMapper } from '../../application/mappers';
 import { ApiResponse, errorResponse, successResponse } from '../../../../shared/utils/api-response';
-import { CreateEmployeeCommand } from '../../application/command/employee';
+
 @Controller('employee')
 export class EmployeeController {
   constructor(

@@ -1,19 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IEmployeeRepository } from '../repositories';
 import { UniqueEntityID } from '../../../../shared/domain';
+import { IEmployeeQueriesRepository } from '../repositories';
 
 @Injectable()
 export class GenerateEmployeeId {
   constructor(
-    @Inject('IEmployeeRepository')
-    private readonly employeeRepository: IEmployeeRepository
+    @Inject('IEmployeeQueriesRepository')
+    private readonly employeeQueriesRepository: IEmployeeQueriesRepository
   ) {}
 
   async generate(firstname: string, lastname: string): Promise<UniqueEntityID> {
     const initials = `${firstname[0]}${lastname[0]}`.toUpperCase();
     const year = new Date().getFullYear();
 
-    const lastEmployeeResult = await this.employeeRepository.getLastCreatedEmployee();
+    const lastEmployeeResult = await this.employeeQueriesRepository.getLastCreatedEmployee();
     let lastId = '00000';
 
     if (lastEmployeeResult.ok && lastEmployeeResult.val?.id) {

@@ -1,10 +1,9 @@
-import { EmployeeEntity } from '../entities/';
-import { Result } from 'src/shared/result';
+import { Result } from '../../../../../shared/result';
+import { EmployeeEntity } from '../../entities';
 
 export type EmployeeQueryResponse = Result<EmployeeEntity, string>;
 
-export interface IEmployeeRepository {
-  create(employee: EmployeeEntity): Promise<EmployeeQueryResponse>;
+export interface IEmployeeQueriesRepository {
   findById(id: string): Promise<EmployeeQueryResponse>;
   getLastCreatedEmployee: () => Promise<EmployeeQueryResponse>;
   findByEmail: (email: string) => Promise<EmployeeQueryResponse>;

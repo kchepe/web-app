@@ -1,17 +1,21 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ICredentialRepository } from 'src/modules/auth/domain/repositories/ICredentialRepository';
 import { PasswordVo } from '../../../domain/value-objects';
 import { UpdateCredentialDto } from 'src/modules/auth/interface';
+import { ICredentialCommandsRepository } from 'src/modules/auth/domain/repositories/commands/credential-commands.interface';
+import { ICredentialQueriesRepository } from '../../../domain/repositories';
 
 @Injectable()
 export class UpdateCredentialUseCase {
   constructor(
-    @Inject('ICredentialRepository') private readonly credentialRepository: ICredentialRepository
+    @Inject('ICredentialCommandsRepository')
+    private readonly credentialCommandsRepository: ICredentialCommandsRepository,
+    @Inject('ICredentialQueriesRepository')
+    private readonly credentialQueriesRepository: ICredentialQueriesRepository
   ) {}
 
   async execute({ employeeId, newPassword }: UpdateCredentialDto) {
     const existingCredential =
-      await this.credentialRepository.getCredentialByEmployeeId(employeeId);
+      await this.credentialQueriesRepository.getCredentialByEmployeeId(employeeId);
 
     if (!existingCredential) {
       throw new Error('No existing employee for this employee Id');
@@ -20,6 +24,6 @@ export class UpdateCredentialUseCase {
     const hashedPassword = await PasswordVo.create(newPassword);
     existingCredential.updatePassword(hashedPassword);
 
-    await this.credentialRepository.updatePassword(existingCredential);
+    await this.credentialCommandsRepository.updatePassword(existingCredential);
   }
 }

@@ -1,2 +1,2 @@
-export * from './credential.prisma.repo';
-export * from './employee.prisma.repo';
+export * from './commands';
+export * from './queries';

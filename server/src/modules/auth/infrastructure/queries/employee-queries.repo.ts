@@ -1,25 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { IEmployeeRepository } from '../domain/repositories';
-import { EmployeeEntity } from '../domain/entities';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { EmployeeMapper } from '../application/mappers/employee.mapper';
-import { Err, tryCatch } from '../../../shared/result';
-import { EmployeeQueryResponse } from '../domain/repositories/IEmployeeRepository';
+import { EmployeeQueryResponse, IEmployeeQueriesRepository } from '../../domain/repositories';
+import { PrismaService } from '../../../../prisma/prisma.service';
+import { Err, tryCatch } from '../../../../shared/result';
+import { EmployeeMapper } from '../../application/mappers';
 
 @Injectable()
-export class EmployeePrismaRepository implements IEmployeeRepository {
+export class EmployeeQueriesRepository implements IEmployeeQueriesRepository {
   constructor(private prisma: PrismaService) {}
-
-  public async create(employee: EmployeeEntity): Promise<EmployeeQueryResponse> {
-    return tryCatch({
-      process: async () => {
-        const data = EmployeeMapper.toCreatePersistanceFromEntity(employee);
-        const user = await this.prisma.employee.create({ data });
-        return EmployeeMapper.toEntityFromPersistance(user);
-      },
-      onError: (e) => `Unexpected error occured while creating employee ${e}`,
-    });
-  }
 
   public async findById(id: string): Promise<EmployeeQueryResponse> {
     return tryCatch({

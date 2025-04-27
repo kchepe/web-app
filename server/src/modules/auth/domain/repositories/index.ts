@@ -1,3 +1,2 @@
-import { IEmployeeRepository } from './IEmployeeRepository';
-
-export { IEmployeeRepository };
+export * from './commands';
+export * from './queries';

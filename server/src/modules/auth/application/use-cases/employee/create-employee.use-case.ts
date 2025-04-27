@@ -1,20 +1,26 @@
 import { CredentialEntity, EmployeeEntity } from '../../../domain/entities';
 import { Inject, Injectable } from '@nestjs/common';
-import { IEmployeeRepository } from '../../../domain/repositories';
 import { EmailVo, PasswordVo } from '../../../domain/value-objects';
 import { GenerateEmployeeId } from '../../../domain/services';
 import { Err, Ok, Result } from '../../../../../shared/result';
 import { CreateEmployeeCommand } from '../../command/employee';
+import {
+  IEmployeeCommandsRepository,
+  IEmployeeQueriesRepository,
+} from 'src/modules/auth/domain/repositories';
 
 @Injectable()
 export class CreateEmployeeUseCase {
   constructor(
-    @Inject('IEmployeeRepository') private readonly employeeRepository: IEmployeeRepository,
+    @Inject('IEmployeeCommandsRepository')
+    private readonly employeeCommandsRepository: IEmployeeCommandsRepository,
+    @Inject('IEmployeeQueriesRepository')
+    private readonly employeeQueriesRepository: IEmployeeQueriesRepository,
     private readonly generateEmployeeIdService: GenerateEmployeeId
   ) {}
 
   public async execute(input: CreateEmployeeCommand): Promise<Result<EmployeeEntity, string>> {
-    const existingEmployee = await this.employeeRepository.findByEmail(input.email);
+    const existingEmployee = await this.employeeQueriesRepository.findByEmail(input.email);
 
     if (!existingEmployee.err) {
       return Err('Email already in use');
@@ -36,7 +42,7 @@ export class CreateEmployeeUseCase {
       employeeId
     );
 
-    const employee = await this.employeeRepository.create(newEmployee);
+    const employee = await this.employeeCommandsRepository.create(newEmployee);
 
     if (employee.err) {
       return Err(employee.val);
