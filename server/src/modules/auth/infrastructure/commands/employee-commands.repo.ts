@@ -11,8 +11,11 @@ import { tryCatch } from '../../../../shared/result';
 @Injectable()
 export class EmployeeCommandsRepository implements IEmployeeCommandsRepository {
   constructor(private prisma: PrismaService) {}
+  create(employee: EmployeeEntity): Promise<EmployeeCommandResponse> {
+    throw new Error('Method not implemented.');
+  }
 
-  public async create(employee: EmployeeEntity): Promise<EmployeeCommandResponse> {
+  public async save(employee: EmployeeEntity): Promise<EmployeeCommandResponse> {
     return tryCatch({
       process: async () => {
         const data = EmployeeMapper.toCreatePersistanceFromEntity(employee);

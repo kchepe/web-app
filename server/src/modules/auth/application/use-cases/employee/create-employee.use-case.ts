@@ -22,7 +22,7 @@ export class CreateEmployeeUseCase {
   public async execute(input: CreateEmployeeCommand): Promise<Result<EmployeeEntity, string>> {
     const existingEmployee = await this.employeeQueriesRepository.findByEmail(input.email);
 
-    if (!existingEmployee.err) {
+    if (existingEmployee.ok) {
       return Err('Email already in use');
     }
 
@@ -42,7 +42,7 @@ export class CreateEmployeeUseCase {
       employeeId
     );
 
-    const employee = await this.employeeCommandsRepository.create(newEmployee);
+    const employee = await this.employeeCommandsRepository.save(newEmployee);
 
     if (employee.err) {
       return Err(employee.val);
