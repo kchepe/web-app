@@ -2,14 +2,6 @@ import { Result, Ok, Err } from 'ts-results';
 
 export { Result, Ok, Err };
 
-export function ok<T>(value: T): Result<T, never> {
-  return Ok(value);
-}
-
-export function err<E>(error: E): Result<never, E> {
-  return Err(error);
-}
-
 export async function tryCatch<T, E>({
   process,
   onError,

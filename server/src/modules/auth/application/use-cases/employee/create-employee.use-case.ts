@@ -5,12 +5,17 @@ import { GenerateEmployeeId } from '../../../domain/services';
 import { Err, Ok, Result } from '../../../../../shared/result';
 import { CreateEmployeeCommand } from '../../command/employee';
 import {
+  ISaveEmployeeCommandResponse,
   IEmployeeCommandsRepository,
   IEmployeeQueriesRepository,
 } from 'src/modules/auth/domain/repositories';
 
+export interface ICreateEmployeeUsecase {
+  execute: (input: CreateEmployeeCommand) => Promise<ISaveEmployeeCommandResponse>;
+}
+
 @Injectable()
-export class CreateEmployeeUseCase {
+export class CreateEmployeeUseCase implements ICreateEmployeeUsecase {
   constructor(
     @Inject('IEmployeeCommandsRepository')
     private readonly employeeCommandsRepository: IEmployeeCommandsRepository,
@@ -19,7 +24,7 @@ export class CreateEmployeeUseCase {
     private readonly generateEmployeeIdService: GenerateEmployeeId
   ) {}
 
-  public async execute(input: CreateEmployeeCommand): Promise<Result<EmployeeEntity, string>> {
+  public async execute(input: CreateEmployeeCommand): Promise<ISaveEmployeeCommandResponse> {
     const existingEmployee = await this.employeeQueriesRepository.findByEmail(input.email);
 
     if (existingEmployee.ok) {

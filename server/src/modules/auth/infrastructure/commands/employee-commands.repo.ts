@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EmployeeEntity } from '../../domain/entities';
 import {
-  EmployeeCommandResponse,
+  ISaveEmployeeCommandResponse,
   IEmployeeCommandsRepository,
 } from '../../domain/repositories/commands/employee-commands.interface';
 import { PrismaService } from '../../../../prisma/prisma.service';
@@ -11,16 +11,13 @@ import { tryCatch } from '../../../../shared/result';
 @Injectable()
 export class EmployeeCommandsRepository implements IEmployeeCommandsRepository {
   constructor(private prisma: PrismaService) {}
-  create(employee: EmployeeEntity): Promise<EmployeeCommandResponse> {
-    throw new Error('Method not implemented.');
-  }
 
-  public async save(employee: EmployeeEntity): Promise<EmployeeCommandResponse> {
+  public async save(employee: EmployeeEntity): Promise<ISaveEmployeeCommandResponse> {
     return tryCatch({
       process: async () => {
         const data = EmployeeMapper.toCreatePersistanceFromEntity(employee);
         const user = await this.prisma.employee.create({ data });
-        return EmployeeMapper.toEntityFromPersistance(user);
+        return user.id;
       },
       onError: (e) => `Unexpected error occured while creating employee ${e}`,
     });

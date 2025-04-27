@@ -17,6 +17,7 @@ export class CredentialMapper {
   static toUpdatePersistanceFromEntity(credential: CredentialEntity) {
     return {
       password: credential.password.value,
+      employeeId: credential.employeeId,
     };
   }
 }

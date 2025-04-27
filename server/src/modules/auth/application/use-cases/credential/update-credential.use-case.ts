@@ -1,11 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PasswordVo } from '../../../domain/value-objects';
-import { UpdateCredentialDto } from 'src/modules/auth/interface';
-import { ICredentialCommandsRepository } from 'src/modules/auth/domain/repositories/commands/credential-commands.interface';
+import {
+  ICredentialCommandsRepository,
+  IUpdatePasswordResponse,
+} from 'src/modules/auth/domain/repositories/commands/credential-commands.interface';
 import { ICredentialQueriesRepository } from '../../../domain/repositories';
+import { UpdatePasswordCommand } from '../../command';
+import { Err, Ok } from '../../../../../shared/result';
+
+export interface IUpdateCredentialUseCase {
+  execute: (input: UpdatePasswordCommand) => Promise<IUpdatePasswordResponse>;
+}
 
 @Injectable()
-export class UpdateCredentialUseCase {
+export class UpdateCredentialUseCase implements IUpdateCredentialUseCase {
   constructor(
     @Inject('ICredentialCommandsRepository')
     private readonly credentialCommandsRepository: ICredentialCommandsRepository,
@@ -13,17 +21,22 @@ export class UpdateCredentialUseCase {
     private readonly credentialQueriesRepository: ICredentialQueriesRepository
   ) {}
 
-  async execute({ employeeId, newPassword }: UpdateCredentialDto) {
-    const existingCredential =
-      await this.credentialQueriesRepository.getCredentialByEmployeeId(employeeId);
+  async execute(command: UpdatePasswordCommand): Promise<IUpdatePasswordResponse> {
+    const existingCredential = await this.credentialQueriesRepository.getCredentialByEmployeeId(
+      command.employeeId
+    );
 
-    if (!existingCredential) {
-      throw new Error('No existing employee for this employee Id');
+    if (!existingCredential.ok) {
+      return Err(existingCredential.val.toString());
     }
 
-    const hashedPassword = await PasswordVo.create(newPassword);
-    existingCredential.updatePassword(hashedPassword);
+    const existingCredentialUnwrap = existingCredential.unwrap();
 
-    await this.credentialCommandsRepository.updatePassword(existingCredential);
+    const hashedPassword = await PasswordVo.create(command.newPassword);
+    existingCredentialUnwrap.updatePassword(hashedPassword);
+
+    await this.credentialCommandsRepository.updatePassword(existingCredentialUnwrap);
+
+    return Ok.EMPTY;
   }
 }
