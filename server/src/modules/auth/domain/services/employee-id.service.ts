@@ -3,7 +3,7 @@ import { UniqueEntityID } from '../../../../shared/domain';
 import { IEmployeeQueriesRepository } from '../repositories';
 
 @Injectable()
-export class GenerateEmployeeId {
+export class EmployeeIdService {
   constructor(
     @Inject('IEmployeeQueriesRepository')
     private readonly employeeQueriesRepository: IEmployeeQueriesRepository

@@ -1,3 +1,1 @@
-import { GenerateEmployeeId } from './generate-employeeId.service';
-
-export { GenerateEmployeeId };
+export * from './employee-id.service';

@@ -6,13 +6,14 @@ import {
   FindEmployeeByIdUseCase,
   UpdateCredentialUseCase,
 } from './application/use-cases';
-import { GenerateEmployeeId } from './domain/services';
+import { EmployeeIdService } from './domain/services';
 import {
   CredentialCommandsRepository,
   CredentialQueriesRepository,
   EmployeeCommandsRepository,
   EmployeeQueriesRepository,
 } from './infrastructure';
+import { EmployeeFactory } from './domain/factories';
 
 @Module({
   controllers: [EmployeeController],
@@ -20,7 +21,8 @@ import {
     PrismaService,
     CreateEmployeeUseCase,
     FindEmployeeByIdUseCase,
-    GenerateEmployeeId,
+    EmployeeFactory,
+    EmployeeIdService,
     UpdateCredentialUseCase,
     {
       provide: 'ICredentialCommandsRepository',
